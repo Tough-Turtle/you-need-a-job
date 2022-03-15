@@ -1,3 +1,4 @@
+const indeed = require('indeed-scraper');
 const queryOptions = {
   host: 'www.indeed.com',
   query: 'JavaScript Software Engineer',
@@ -13,10 +14,9 @@ const queryOptions = {
 const indeedController = {};
 
 indeedController.search = (req, res, next) => {
-  const { city, jobTitle } = req.body;
-  queryOptions.city = city;
-  queryOptions.query = jobTitle;
-
+  const { location, title } = req.query;
+  queryOptions.city = location;
+  queryOptions.query = title;
   indeed
     .query(queryOptions)
     .then((jobs) => {
