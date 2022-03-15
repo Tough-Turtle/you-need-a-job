@@ -33,6 +33,10 @@ module.exports = {
         test: /.(css|scss)$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.svg$/,
+        use: ['svg-inline-loader', 'svg-url-loader'],
+      },
     ],
   },
   devServer: {

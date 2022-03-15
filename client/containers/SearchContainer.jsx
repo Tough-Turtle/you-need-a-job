@@ -1,11 +1,12 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import NavBar from '../components/NavBar.jsx';
+import {JobSearchResults} from './JobSearchResults.jsx'
 
 const SearchContainer = () => {
 
   const [jobQuery, setJobQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
-  const [queryResults, setQueryResults] = useState({  })
+  const [queryResults, setQueryResults] = useState([])
 
   const handleJobQueryInput = (e) => {
     setJobQuery(e.target.value)
@@ -21,28 +22,19 @@ const SearchContainer = () => {
     e.preventDefault();
     // api call
 
-    // const body = JSON.stringify({
-    //   title: jobQuery,
-    //   location: locationQuery
-    // });
+    // useEffect(() => {
 
-    
+    // })
 
-
-
-    fetch(`http://localhost:3000/search?title=${jobQuery}&location=${locationQuery}`, {
+    fetch(`http://localhost:3001/search?title=${jobQuery}&location=${locationQuery}`, {
       method: 'GET',
       header: {
         'Access-Control-Allow-Origin': "*"
       },
-      // body: body
     }).then(res => res.json()).then(data => {
-      console.log(data);
-      setQueryResults({
-        title: 'senior cat wrangler',
-        location: 'CA'
-      })
-
+      setQueryResults(data);
+      setJobQuery('');
+      setLocationQuery('');
     })
   }
 
@@ -61,11 +53,11 @@ const SearchContainer = () => {
         <form onSubmit={handleSubmit}>
          
          <label className="search-query-label" htmlFor="job-title">Job Title
-         <input type='text' name="job-title" className="search-input" onChange={handleJobQueryInput}></input>
+         <input type='text' name="job-title" className="search-input" onChange={handleJobQueryInput} value={jobQuery}></input>
          </label>
          
          <label className="search-query-label" htmlFor="location">Location
-         <input type='text' name="location" className="search-input" onChange={handleLocationQueryInput}></input>
+         <input type='text' name="location" className="search-input" onChange={handleLocationQueryInput} value={locationQuery}></input>
          </label>
 
         <input type="submit" value="Search"/>
@@ -73,7 +65,10 @@ const SearchContainer = () => {
          </form>
         
         </div>
+        <div className="job-search-query-container">
         <h2 style={{ border: '1px white solid'}}> Search results table placeholder </h2>
+        <JobSearchResults queryResults={queryResults}/>
+  </div>
       </div>
     </>
   )

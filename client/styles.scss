@@ -1,6 +1,8 @@
 $mikelovesthiscolor: #232946;
 $txt: #121629;
 $container-bg: #b8c1ec;
+$gray: #808080;
+$selected: #ffcccb;
 
 * {
   margin: 0.5rem;
@@ -46,4 +48,22 @@ h1 {
 
 button {
   width: 5rem;
+}
+
+.search-result {
+  display: flex;
+}
+
+.favorite-btn {
+  width: 20px;
+  height: 20px;
+  background-color: $gray;
+}
+
+.favorite-btn:hover {
+  cursor: pointer;
+}
+
+.selected {
+  background-color: $selected;
 }

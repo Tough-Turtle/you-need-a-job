@@ -2,11 +2,7 @@ import React from 'react';
 
 const DataTable = () => {
 
-  // const handleSearch = () => {
-
-
-
-  // }
+  
 
   return (
     <div>

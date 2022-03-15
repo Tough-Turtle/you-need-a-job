@@ -37,6 +37,21 @@ app.use(express.json());
 
 // app.use(express.static('../client'));
 
+// *********** TESTING FOR FRONT END 
+
+app.get('/search', (req, res) => {
+  const dummyJobs = [{
+    date_posted: 'Tuesday', title: 'Monkey Manager', source: 'Indeed', company_name: 'Bronx Zoo', detail_url: 'https://uniqueurl1.com', location: 'Bronx', country: 'USA', state: 'NY', city: 'NY', description: 'Must have 2 years prior zookeeping experience. Monkey whispering preferred.'
+  },
+  {
+    date_posted: 'Yesterday', title: 'Senior Cat Wranger', source: 'Indeed', company_name: 'Microsoft', detail_url: 'https://uniqueurl2.com', location: 'Seattle', country: 'USA', state: 'WA', city: 'Seattle', description: 'Looking for a famously patient person who can mostly just get a bunch of people in the same room at the same time.'
+  }];
+
+  console.log('search route');
+  res.status(200).header('Access-Control-Allow-Origin', "*").json(dummyJobs)
+});
+// ********************
+
 app.get('/rapid', (req, res) => {
   axios.request(options).then(function (response) {
     console.log(response.data);
