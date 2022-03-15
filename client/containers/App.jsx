@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
+import NavBar from '../components/NavBar.jsx';
+import LoginPage from './LoginPage.jsx';
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
 
-return (
-  <div>
-  <h1>I am the Squirtle App Main Container</h1>
-  <p>Hang me on the root div why dontcha?</p>
-  </div>
-)
+  const handleLogin = () => {
+    // OAuth logic here
+    setLoggedIn(true);
+  }
+
+  if (loggedIn) return (
+    <div>
+      <NavBar />
+    </div>
+  )
+  else return (
+    <div>
+      <LoginPage handleLogin={handleLogin} />
+    </div>
+  )
 
 }
 
