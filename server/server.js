@@ -50,6 +50,12 @@ app.get('/search', (req, res) => {
   console.log('search route');
   res.status(200).header('Access-Control-Allow-Origin', "*").json(dummyJobs)
 });
+
+app.post('/user', (req, res) => {
+  console.log('favorite route');
+  console.log('request body', req.body);
+  res.status(200).header('Access-Control-Allow-Origin', "*").json(req.body)
+})
 // ********************
 
 app.get('/rapid', (req, res) => {

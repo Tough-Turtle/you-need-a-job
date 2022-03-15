@@ -4,6 +4,10 @@ import React, {useEffect, useState} from 'react';
 
 export const JobSearchResult = (props) => {
 
+  const {date_posted: datePosted, title, source, company_name: companyName, detail_url: detailUrl, location, country, state, city, description} = props.data;
+
+  const username = props.username;
+
   const [favorited, setFavorited] = useState(false);
 
   /*
@@ -13,24 +17,48 @@ export const JobSearchResult = (props) => {
   */
 
   const handleSelectFavorite = (e) => {
-    console.log(e)
-    console.log(e.target)
+    // console.log(e)
+    console.log(e.target.parentElement)
+    console.log(e.target.parentElement.previousSibling.lastChild.innerText)
+    console.log(e.target.parentElement.parentElement)
+
+    const data = JSON.stringify({
+      user: props.username,
+      url: e.target.parentElement.previousSibling.lastChild.innerText
+    });
+    console.log(data)
+
     if (!favorited) {
 
-      setFavorited(true);
+      fetch('http://localhost:3001/user', {
+        method: 'POST',
+        header: {
+          'Access-Control-Allow-Origin': "*",
+          'Content-Type': 'application/json'
+        },
+        body: data
+      }).then(res => res.json()).then(data => {
+        console.log('got stuff back');
+        console.log(data);
+        setFavorited(true);
+      })
+  
     } else {
-
-      setFavorited(false);
+      fetch('http://localhost:3001/user', {
+        method: 'DELETE',
+        header: {
+          'Access-Control-Allow-Origin': "*",
+          'Content-Type': 'application/json'
+        },
+        body: data
+      }).then(res => res.json()).then(data => {
+        console.log('got stuff back');
+        console.log(data);
+        setFavorited(false);
+      })
     }
  
   }
-
-//  console.log('props', props);
-
-  const {date_posted: datePosted, title, source, company_name: companyName, detail_url: detailUrl, location, country, state, city, description} = props.data;
-
-console.log(favorited)
-
   return (
     <div className='search-result'>
       <div className='result-col'>

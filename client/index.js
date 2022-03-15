@@ -11,8 +11,8 @@ ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element={ <App /> } />
-        <Route path='/search' element={ <SearchContainer /> } />
-        <Route path='/applications' element={ <ApplicationsContainer /> } />
+      <Route path='/search/:username' element={ <SearchContainer /> } />
+      <Route path='/applications' element={ <ApplicationsContainer /> } />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root'));

@@ -4,7 +4,7 @@ import {JobSearchResult} from '../components/JobSearchResult.jsx'
 export const JobSearchResults = (props) => {
   console.log('searchresultsprops', props)
 let results = [];
-  if (props) results = props.queryResults.map(result => <JobSearchResult data={result} />)
+  if (props) results = props.queryResults.map(result => <JobSearchResult data={result} username={props.username} />)
   
 
   return (
@@ -12,5 +12,5 @@ let results = [];
       <p>Check out these sick query results</p>
       {results}
       </div>
-  )
+  ) 
 }

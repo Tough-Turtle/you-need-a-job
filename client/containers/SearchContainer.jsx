@@ -1,8 +1,24 @@
 import React,{useState, useEffect} from 'react';
 import NavBar from '../components/NavBar.jsx';
 import {JobSearchResults} from './JobSearchResults.jsx'
+import { useLocation, useParams } from 'react-router-dom'
 
-const SearchContainer = () => {
+const SearchContainer = (props) => {
+
+  // const {state} = useLocation();
+
+  // console.log('state', state)
+
+  console.log('search container props',props)
+  console.log('search container props location',props.location)
+
+  const {username} = useParams();
+  console.log('params', username);
+
+  // const location = useLocation();
+  // console.log('location', location)
+
+  // console.log('query', query);
 
   const [jobQuery, setJobQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
@@ -26,7 +42,7 @@ const SearchContainer = () => {
 
     // })
 
-    fetch(`http://localhost:3001/search?title=${jobQuery}&location=${locationQuery}`, {
+    fetch(`http://localhost:3001/search?title=${jobQuery}&location=${locationQuery}&username=${username}`, {
       method: 'GET',
       header: {
         'Access-Control-Allow-Origin': "*"
@@ -44,7 +60,7 @@ const SearchContainer = () => {
  
   return (
     <>
-      <NavBar />
+    <NavBar />
       <div className='search-container'>
         <h1>Search Container</h1>
         <div>
@@ -67,7 +83,7 @@ const SearchContainer = () => {
         </div>
         <div className="job-search-query-container">
         <h2 style={{ border: '1px white solid'}}> Search results table placeholder </h2>
-        <JobSearchResults queryResults={queryResults}/>
+        <JobSearchResults queryResults={queryResults} username={username}/>
   </div>
       </div>
     </>
