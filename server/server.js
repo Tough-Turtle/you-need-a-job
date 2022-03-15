@@ -3,7 +3,7 @@ const express = require('express');
 // const router = require('./router');
 const app = express();
 require('dotenv').config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const indeed = require('indeed-scraper');
 
 const queryOptions = {
@@ -46,26 +46,12 @@ app.get('/rapid', (req, res) => {
   res.status(200);
 })
 
-// app.get('/', (req, res) => {
-//   // indeed.query(queryOptions).then(res => {
-//   //   console.log(res); // An array of Job objects
-//   // });
-//   // res.status(200).send();
-//   res.sendFile(path.join(__dirname, '../client/index.html'));
-// });
-
-app.use((req, res) => {
-  console.log('Error: page not found')
-  res.status(400).send('Error: page not found');
-});
-
-app.use((err, req, res, next) => {
-if (!err) err = {
-  log: 'Express error handler caught unknown middleware',
-  message: { err: 'An unknown error occurred'},
-};
-console.log(err);
-return res.status(500).json(err);
+app.get('/', (req, res) => {
+  indeed.query(queryOptions).then(res => {
+    console.log(res); // An array of Job objects
+  });
+  res.status(200).send();
+  // res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const process = require('process');
 
 module.exports = {
-  mode: process.env.NODE_ENV,
+  mode: 'development',
   entry: path.resolve(__dirname,'./client/index.js'),
   devServer: {
     static: {
@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         test: /.(css|scss)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader', 'scss-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
