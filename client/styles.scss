@@ -4,7 +4,7 @@ $container-bg: #b8c1ec;
 
 * {
   margin: 0.5rem;
-  box-sizing: border-box;
+  // box-sizing: border-box;
   font-family: Helvetica, sans-serif;
 }
 
@@ -42,4 +42,8 @@ h1 {
   .link:active {
     color: wheat;
   }
+}
+
+button {
+  width: 5rem;
 }

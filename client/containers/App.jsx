@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar.jsx';
+import ApplicationsContainer from './ApplicationsContainer.jsx';
 import LoginPage from './LoginPage.jsx';
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
 
   if (loggedIn) return (
     <div>
-      <NavBar />
+      <ApplicationsContainer />
     </div>
   )
   else return (
