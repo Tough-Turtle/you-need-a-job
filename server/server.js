@@ -3,7 +3,7 @@ const express = require('express');
 // const router = require('./router');
 const app = express();
 require('dotenv').config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const indeed = require('indeed-scraper');
 
 const queryOptions = {
@@ -35,7 +35,7 @@ const options = {
 
 app.use(express.json());
 
-app.use(express.static('../client'));
+// app.use(express.static('../client'));
 
 app.get('/rapid', (req, res) => {
   axios.request(options).then(function (response) {
@@ -47,11 +47,11 @@ app.get('/rapid', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  // indeed.query(queryOptions).then(res => {
-  //   console.log(res); // An array of Job objects
-  // });
-  // res.status(200).send();
-  res.sendFile(path.join(__dirname, '../client/index.html'));
+  indeed.query(queryOptions).then(res => {
+    console.log(res); // An array of Job objects
+  });
+  res.status(200).send();
+  // res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));

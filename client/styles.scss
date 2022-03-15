@@ -1,4 +1,5 @@
-$red: red;
+$mikelovesthiscolor: rgb(255, 205, 205);
+$txt: rgb(0, 162, 255);
 
 * {
   margin: 0;
@@ -7,9 +8,9 @@ $red: red;
 }
 
 body {
-  background-color: $red;
+  background-color: $mikelovesthiscolor;
 }
 
 h1 {
-  color: red;
+  color: $txt;
 }
