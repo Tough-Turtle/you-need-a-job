@@ -1,4 +1,7 @@
 const indeed = require('indeed-scraper');
+const { query } = require('express');
+const db = require('../model');
+
 const queryOptions = {
   host: 'www.indeed.com',
   query: 'JavaScript Software Engineer',
@@ -8,28 +11,33 @@ const queryOptions = {
   jobType: 'fulltime',
   maxAge: '7',
   sort: 'date',
-  limit: 100,
+  limit: 10,
 };
 
 const indeedController = {};
 
-indeedController.search = (req, res, next) => {
-  const { location, title } = req.query;
+indeedController.search = async (req, res, next) => {
+  // get the location, title, and user from request query
+  const { location, title, user } = req.query;
   queryOptions.city = location;
   queryOptions.query = title;
-  indeed
-    .query(queryOptions)
-    .then((jobs) => {
-      res.locals.jobs = jobs;
-      // check if job url is in user's db and then add liked = true if it is, and false otherwise
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        message: 'Error in the indeedController.search middleware',
-        status: 500,
-      });
+  const queryString = 'SELECT * FROM user WHERE user=$1';
+  try {
+    // get the list of jobs a user likes from db
+    const arrOfUserLikedJobs = await db.query(queryString, [user]);
+    console.log(arrOfUserLikedJobs.rows);
+    const arrOfLikedURL = arrOfUserLikedJobs.rows.map((likedJob) => likedJob.url);
+    const searchedJobs = await indeed.query(queryOptions);
+    // use the URLs of the liked jobs to filter out those jobs from appearing in the returned job search
+    const filteredJobs = searchedJobs.filter((job) => !(job.url in arrOfLikedURL));
+    res.locals.jobs = filteredJobs;
+    return next();
+  } catch {
+    return next({
+      message: 'Error in the indeedController.search middleware',
+      status: 500,
     });
+  }
 };
 
 module.exports = indeedController;

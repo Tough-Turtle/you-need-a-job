@@ -22,10 +22,9 @@ app.get('/signin', (req, res) => {
   res.status(200).send('send the homepage to the client');
 });
 
-// search for jobs
+// search for jobs. returns a list of jobs that have not been liked by the user
 app.get('/search', indeedController.search, (req, res) => {
   res.status(200).json(res.locals.jobs);
-  // res.send('hi from /search');
 });
 
 // return list of liked jobs
