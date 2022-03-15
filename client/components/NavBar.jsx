@@ -7,7 +7,7 @@ const NavBar = () => {
     <div className='navigation-container'>
       <h1>YNAJ</h1>
       <nav className='nav-bar'>
-        <Link to='/applications' className='link'>Applications</Link>
+        <Link to='/applications' className='link'>My applications</Link>
         <Link to='/search' className='link'>Search Jobs</Link>
       </nav>
     </div>
