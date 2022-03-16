@@ -43,7 +43,7 @@ const ApplicationsContainer = props => {
     <>
       {/* <NavBar username={username} /> */}
       <div className="container">
-        <h1>Applications Container</h1>
+        <h1>My Applications</h1>
         <DataTable username={username} data={data} />
       </div>
     </>
