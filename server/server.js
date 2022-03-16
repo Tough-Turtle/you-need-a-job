@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 // const router = require('./router');
+const cors = require('cors');
 const app = express();
 require('dotenv').config();
 const axios = require('axios').default;
@@ -8,11 +9,27 @@ const port = process.env.PORT || 3001;
 
 const indeedController = require('./controller/indeedController');
 const userController = require('./controller/userController');
+const callback = require('./callback.js');
 
+app.use(
+  cors({
+    origin: ['http://localhost:8080'],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
-app.use(express.json());
 
+app.use('/callback', callback, (req, res) => {
+  res.redirect('http://localhost:8080');
+});
+
+app.use('/signin', (req, res) => {
+  // serve the sign in page to the client >> go to http://localhost:3001/signin
+  res.status(200).sendFile(path.resolve(__dirname, './../client/index.html'));
+});
 // app.use(express.static('../client'));
 
 // *********** TESTING FOR FRONT END
@@ -78,12 +95,46 @@ app.get('/search', indeedController.search, (req, res) => {
 
 // FINISHED !! return list of liked jobs
 app.get('/user', userController.getLiked, (req, res) => {
-  res.status(200).json(res.locals.liked);
+  console.log('final user get middleware');
+  res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.liked);
+  // res
+  //   .status(200)
+  //   .header('Access-Control-Allow-Origin', '*')
+  //   .json([
+  //     {
+  //       _id: 1,
+  //       postDate: 'just Posted',
+  //       title: 'Software Engineer',
+  //       company: 'Google',
+  //       isEasyApply: false,
+  //       salary: '$200,000',
+  //       url: 'indeed.com/greatgooglejob',
+  //       location: 'Mountain View, CA',
+  //       summary: 'React whiz needed.',
+  //       note: 'TBD',
+  //       date_apply: undefined,
+  //       status: 'Not Applied',
+  //     },
+  //     {
+  //       _id: 2,
+  //       postDate: 'post yesterday',
+  //       title: 'Software Developer',
+  //       company: 'Netflix',
+  //       isEasyApply: false,
+  //       salary: '$180,000',
+  //       url: 'indeed.com/greatnextflixjob',
+  //       location: 'Los Angeles, CA',
+  //       summary: 'Redux whiz needed.',
+  //       note: 'TBD',
+  //       date_apply: '3/10/22',
+  //       status: 'Onsite',
+  //     },
+  //   ]);
 });
 
 // FINISHED !! add a liked job posting for a user
 app.post('/user', userController.addLiked, (req, res) => {
-  res.status(200).json(res.locals.addSuccess);
+  res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.addSuccess);
 });
 
 // update a liked job's status for a user
@@ -103,7 +154,7 @@ app.use((err, req, res, next) => {
     status: 500,
   };
   const error = Object.assign({}, errHandler, err);
-  console.log(error.message);
+  console.log(error.message, err);
   res.status(error.status).send(error.message);
 });
 
