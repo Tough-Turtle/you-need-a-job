@@ -8,10 +8,16 @@ const indeed = require('indeed-scraper');
 const axios = require('axios').default;
 const indeedController = require('./controller/indeedController');
 const userController = require('./controller/userController');
+const callback = require('./callback.js');
 
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
 app.use(express.json());
+
+app.use('/callback', callback, (req, res) => {
+  res.redirect('http://localhost:8080');
+});
+
 
 app.use('/signin', (req, res) => {
   // serve the sign in page to the client >> go to http://localhost:3001/signin

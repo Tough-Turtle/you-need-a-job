@@ -18,6 +18,7 @@
     "express": "^4.17.3",
     "html-webpack-plugin": "^5.5.0",
     "indeed-scraper": "^3.1.4",
+    "lodash": "^4.17.21",
     "pg": "^8.7.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

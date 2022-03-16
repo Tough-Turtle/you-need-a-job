@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import _ from 'lodash';
 import { useLinkedIn } from "react-linkedin-login-oauth2";
 import linkedin from "react-linkedin-login-oauth2";
 // require('dotenv').config()
@@ -13,6 +13,7 @@ class Login extends Component {
       lastName: null,
       profileURL: null,
       pictureURL: null,
+    //   email: null,
     };
   }
   componentDidMount() {
@@ -29,8 +30,19 @@ class Login extends Component {
     }
   };
 
+  updateProfile = (profile) => {
+    console.log(profile)
+      this.setState({
+        isAuthorized: true,
+        firstName: _.get(profile,'localizedFirstName',''),
+        lastName: _.get(profile,'localizedLastName',''),
+        profileURL: `https://www.linkedin.com/in/${_.get(profile,'vanityName','')}`,
+        pictureURL: _.get(_.last(_.get(profile,'profilePicture.displayImage~.elements','')),'identifiers[0].identifier','')
+      })
+  }
+
   requestProfile = () => {
-    const oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77q8nxwwnsqhni&scope=r_liteprofile&state=123456&redirect_uri=http://localhost:8080`;
+    const oauthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.LINKEDIN_CLIENT_ID}&scope=r_liteprofile&state=123456&redirect_uri=http://localhost:3001/callback`;
     const width = 450,
       height = 730,
       left = window.screen.width / 2 - width / 2,
@@ -54,12 +66,13 @@ class Login extends Component {
       <div className="App-body">
         <button onClick={this.requestProfile}>Linkedin Login</button>
         {this.state.isAuthorized && (
-          <ProfileCard
+          <div>
             firstName={this.state.firstName}
             lastName={this.state.lastName}
             profileURL={this.state.profileURL}
             pictureURL={this.state.pictureURL}
-          />
+            {/* email={this.state.email} */}
+          </div>
         )}
       </div>
     );
