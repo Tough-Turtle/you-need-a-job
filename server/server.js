@@ -20,16 +20,11 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
 
 app.use('/callback', callback, (req, res) => {
   res.redirect('http://localhost:8080');
 });
 
-app.use('/signin', (req, res) => {
-  // serve the sign in page to the client >> go to http://localhost:3001/signin
-  res.status(200).sendFile(path.resolve(__dirname, './../client/index.html'));
-});
 // app.use(express.static('../client'));
 
 // *********** TESTING FOR FRONT END
@@ -67,6 +62,11 @@ app.get('/user', (req, res) => {
 */
 // ********************
 
+app.post('/signin', userController.signin, (req, res) => {
+  // serve the sign in page to the client
+  res.status(200).json(res.locals.signin);
+});
+
 app.get('/rapid', (req, res) => {
   axios
     .request(options)
@@ -83,17 +83,12 @@ app.get('/', (req, res) => {
   res.send('hi from /');
 });
 
-app.get('/signin', (req, res) => {
-  // serve the sign in page to the client
-  res.status(200).send('send the homepage to the client');
-});
-
-// search for jobs. returns a list of jobs that have not been liked by the user
+// FINISHED !! search for jobs. returns a list of jobs that have not been liked by the user
 app.get('/search', indeedController.search, (req, res) => {
   res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.jobs);
 });
 
-// return list of liked jobs
+// FINISHED !! return list of liked jobs
 app.get('/user', userController.getLiked, (req, res) => {
   console.log('final user get middleware');
   res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.liked);
@@ -132,13 +127,13 @@ app.get('/user', userController.getLiked, (req, res) => {
   //   ]);
 });
 
-// add a liked job posting for a user
+// FINISHED !! add a liked job posting for a user
 app.post('/user', userController.addLiked, (req, res) => {
   res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.addSuccess);
 });
 
 // update a liked job's status for a user
-app.patch('/:user/:applicationID', userController.updateStatus, (req, res) => {});
+app.patch('/user', userController.update, (req, res) => {});
 
 // app.delete('/:user/:applicationID', userController.deleteLiked, (req, res) => {});
 

@@ -2,6 +2,28 @@ const userController = {};
 const { query } = require('express');
 const db = require('../model');
 
+userController.signin = async (req, res, next) => {
+  try {
+    const { user } = req.body;
+    const queryString = 'SELECT * FROM "public"."user" WHERE username=$1';
+    const userOnDB = await db.query(queryString, [user]);
+    // if user already exist on the db, return next w/o
+    if (userOnDB.rows.length) {
+      res.locals.signin = true;
+      return next();
+    }
+    const createUserString = 'INSERT INTO "public"."user" (username) VALUES ($1)';
+    const createUser = await db.query(createUserString, [user]);
+    res.locals.signin = true;
+    return next();
+  } catch {
+    return next({
+      message: 'Error in the userController.signin middleware',
+      status: 500,
+    });
+  }
+};
+
 userController.getLiked = async (req, res, next) => {
   console.log('in get liked');
   const { user } = req.query;
@@ -69,9 +91,19 @@ userController.addLiked = async (req, res, next) => {
   }
 };
 
-userController.updateStatus = (req, res, next) => {
-  const user = req.params.user;
-  const applicationID = req.params.user;
+userController.update = async (req, res, next) => {
+  const { _id, status, note, date_applied } = req.body;
+  try {
+    const updateQueryString = 'UPDATE "public"."user_jobs" SET note=$1 WHERE _id=$3 RETURNING *';
+    const updateQueryValues = [note, _id];
+    await db.query(updateQueryString, updateQueryValues);
+    res.send('hello');
+  } catch {
+    return next({
+      message: 'Error in the userController.update middleware',
+      status: 500,
+    });
+  }
 };
 
 // userController.deleteLiked = (req, res, next) => {
