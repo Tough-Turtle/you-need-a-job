@@ -2,9 +2,10 @@ import React from 'react';
 import { TrackedJob } from './TrackedJob.jsx';
 
 const DataTable = props => {
-  const jobs = props.data.map(job => {
-    <TrackedJob jobInfo={job} />;
-  });
+  console.log(props.data);
+  const jobs = props.data.map(job => <TrackedJob jobInfo={job} />);
+
+  console.log(jobs);
 
   return (
     <div>
