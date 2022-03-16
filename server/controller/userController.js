@@ -26,17 +26,46 @@ userController.addLiked = async (req, res, next) => {
   const { title, summary, url, company, postDate, salary, isEasyApply, user } = req.body;
   const fields = [title, summary, url, company, postDate, salary, isEasyApply];
   const checkQueryString = 'SELECT * FROM "public"."job" WHERE url = $1;';
-  const checkedJob = await db.query(queryString, [url]);
-  // check for checkJob.rows.length;
-  if (!checkedJob.rows.length) {
-    const insertQueryString =
-      'INSERT INTO "public"."job" (title, summary, url, post_date, salary, is_easy_apply) VALUES ($1, $2, $3, $4, $5, $6, $7);';
-    const likedJob = await db.query(queryString, fields);
-  }
-  const addToLikedJobsQuery =
-    'INSERT INTO "public"."user_jobs"(username, job_id, note, date_applied, status) VALUES ($1, $2, $3, $4, $5)';
 
-  // insert into public.user_jobs with user id
+  try {
+    // check if the liked job is in the list of jobs
+    const checkedJob = await db.query(checkQueryString, [url]);
+    // if it isn't insert it into the database
+    if (!checkedJob.rows.length) {
+      const insertQueryString =
+        'INSERT INTO "public"."job" (title, summary, url, company, post_date, salary, is_easy_apply) VALUES ($1, $2, $3, $4, $5, $6, $7);';
+      const likedJob = await db.query(insertQueryString, fields);
+      console.log('not in the database');
+    }
+    const jobIDquery = 'SELECT job_id FROM "public"."job" WHERE url=$1';
+    const jobIDsearch = await db.query(jobIDquery, [url]);
+    const jobID = jobIDsearch.rows[0].job_id;
+
+    // check the database to see if user has already liked the job, if he has then ignore the request
+    const checkDoubleLikeQuery =
+      'SELECT * FROM "public"."user_jobs" WHERE username=$1 AND job_id=$2';
+    const checkDoubleLikeValues = [user, jobID];
+    const doubleLikes = await db.query(checkDoubleLikeQuery, checkDoubleLikeValues);
+
+    // if there's 1 or more of a user : job link, there's no need to like again..return next()
+    if (doubleLikes.rows.length >= 1) {
+      res.locals.addSuccess = false;
+      return next();
+    }
+
+    // if there isn't a user:job link, add it to the user_jobs table
+    const addToLikedJobsQueryString =
+      'INSERT INTO "public"."user_jobs"(username, job_id, note, status) VALUES ($1, $2, $3, $4)';
+    const addToLikedJobsQueryValues = [user, jobID, 'Add notes...', 'not yet applied'];
+    await db.query(addToLikedJobsQueryString, addToLikedJobsQueryValues);
+    res.locals.addSuccess = true;
+    return next();
+  } catch {
+    return next({
+      message: 'Error in the userController.addLiked middleware',
+      status: 500,
+    });
+  }
 };
 
 userController.updateStatus = (req, res, next) => {
