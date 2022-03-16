@@ -10,7 +10,7 @@ CREATE TABLE "job" (
 	"job_id" serial PRIMARY KEY,
 	"title" varchar(255),
 	"summary" varchar(255),
-	"url" varchar(255) NOT NULL,
+	"url" TEXT NOT NULL,
 	"company" varchar(255),
 	"post_date" varchar(255),
 	"salary" varchar(255),

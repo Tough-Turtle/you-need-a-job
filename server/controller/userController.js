@@ -45,7 +45,7 @@ userController.getLiked = async (req, res, next) => {
 // add the liked job to the user in the database
 userController.addLiked = async (req, res, next) => {
   const { title, summary, url, company, postDate, salary, isEasyApply, user } = req.body;
-  console.log('REQ BODY: ', req.body);
+  // console.log('REQ BODY: ', req.body);
   const fields = [title, summary, url, company, postDate, salary, isEasyApply];
   const checkQueryString = 'SELECT * FROM "public"."job" WHERE url = $1;';
 
@@ -56,8 +56,8 @@ userController.addLiked = async (req, res, next) => {
     if (!checkedJob.rows.length) {
       const insertQueryString =
         'INSERT INTO "public"."job" (title, summary, url, company, post_date, salary, is_easy_apply) VALUES ($1, $2, $3, $4, $5, $6, $7);';
-      // console.log(fields);
       const likedJob = await db.query(insertQueryString, fields);
+      console.log('added a new job into DB');
     }
     const jobIDquery = 'SELECT job_id FROM "public"."job" WHERE url=$1';
     const jobIDsearch = await db.query(jobIDquery, [url]);
