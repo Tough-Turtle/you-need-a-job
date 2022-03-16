@@ -31,9 +31,17 @@ export const JobSearchResult = props => {
     // console.log(e.target.parentElement.parentElement)
 
     const data = JSON.stringify({
-      user: props.username,
+      title,
+      summary,
       url: e.target.parentElement.previousSibling.lastChild.innerText,
+      company,
+      postDate,
+      salary,
+      isEasyApply,
+      user,
     });
+
+    // title, summary, url, company, postDate, salary, isEasyApply, user
 
     console.log('body data in handle select favorite', data);
 
