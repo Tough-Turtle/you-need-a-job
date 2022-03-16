@@ -20,16 +20,11 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
 
 app.use('/callback', callback, (req, res) => {
   res.redirect('http://localhost:8080');
 });
 
-app.use('/signin', (req, res) => {
-  // serve the sign in page to the client >> go to http://localhost:3001/signin
-  res.status(200).sendFile(path.resolve(__dirname, './../client/index.html'));
-});
 // app.use(express.static('../client'));
 
 // *********** TESTING FOR FRONT END
@@ -67,6 +62,11 @@ app.get('/user', (req, res) => {
 */
 // ********************
 
+app.post('/signin', userController.signin, (req, res) => {
+  // serve the sign in page to the client
+  res.status(200).json(res.locals.signin);
+});
+
 app.get('/rapid', (req, res) => {
   axios
     .request(options)
@@ -81,11 +81,6 @@ app.get('/rapid', (req, res) => {
 
 app.get('/', (req, res) => {
   res.send('hi from /');
-});
-
-app.get('/signin', (req, res) => {
-  // serve the sign in page to the client
-  res.status(200).send('send the homepage to the client');
 });
 
 // FINISHED !! search for jobs. returns a list of jobs that have not been liked by the user
