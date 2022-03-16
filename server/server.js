@@ -10,12 +10,12 @@ const indeedController = require('./controller/indeedController');
 const userController = require('./controller/userController');
 
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.json());
 
-app.get('/signin', (req, res) => {
-  // serve the sign in page to the client
-  res.status(200).send('send the homepage to the client');
+app.use('/signin', (req, res) => {
+  // serve the sign in page to the client >> go to http://localhost:3001/signin
+  res.status(200).sendFile(path.resolve(__dirname, "./../client/index.html"));
 });
 
 // return list of liked jobs
@@ -48,7 +48,7 @@ app.use((err, req, res, next) => {
     status: 500,
   };
   const error = Object.assign({}, errHandler, err);
-  console.log(error.message);
+  console.log(error.message, err);
   res.status(error.status).send(error.message);
 });
 
