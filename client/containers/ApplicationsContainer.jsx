@@ -35,7 +35,7 @@ const ApplicationsContainer = props => {
       .then(res => res.json())
       .then(data => {
         console.log('got data', data);
-        setData([]);
+        setData(data);
       });
   }, []);
 
@@ -44,7 +44,7 @@ const ApplicationsContainer = props => {
       {/* <NavBar username={username} /> */}
       <div className="container">
         <h1>Applications Container</h1>
-        <DataTable username={username} data={data}/>
+        <DataTable username={username} data={data} />
       </div>
     </>
   );
