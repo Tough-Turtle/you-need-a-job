@@ -13,7 +13,7 @@ let results = [];
 
   return (
     <div>
-      <p>Check out these sick query results</p>
+      {/* <p>Check out these sick query results</p> */}
       {results}
       </div>
   ) 

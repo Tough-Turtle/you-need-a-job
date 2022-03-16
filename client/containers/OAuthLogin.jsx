@@ -66,7 +66,8 @@ class OAuthLogin extends Component {
   render() {
     return (
       <div className="App-body">
-        <button onClick={this.requestProfile}>Linkedin Login</button>
+        {/* <img src='you-need-a-job/assets/icons/linkedin.png'/> */}
+        <button type="image" id="linkedin-icon" src="you-need-a-job/assets/icons/linkedin.png" onClick={this.requestProfile}>Login with LinkedIn</button>
         {this.state.isAuthorized && (
           <div>
             firstName={this.state.firstName}

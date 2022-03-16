@@ -40,6 +40,9 @@ h1 {
     color: $mikelovesthiscolor;
     text-decoration: none;
   }
+  .link:hover {
+    color: #FFFFFF;
+  }
 
   .link:active {
     color: wheat;
@@ -47,13 +50,77 @@ h1 {
 }
 
 button {
-  width: 5rem;
+  // width: 10rem;
+  background-color: $container-bg;
+  display:block;
+  padding: 0.35em 1.2em;
+  border: 0.3em  solid #FFFFFF;
+  margin: -20px +40px;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#000000;
+  text-align:center;
+  transition: all 0.2s;
+}
+.searchjob-button {
+  margin-left: 5px;
+}
+
+button:hover {
+  color:#000000;
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
+.App-body {
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  width: 160px;
+  height: 80px;
+  padding: 20px;
+  border: 5px solid #FFFFFF;
+  align-items: center;
 }
 
 .search-result {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
+  // flex-wrap: wrap;
+  justify-content: left;
 }
 
+.search-header {
+  color:$txt;
+}
+.search-query-label {
+  color: $txt;
+}
+.result-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  border: 1px solid #FFFFFF;
+  margin: 10px 0 20px;
+}
+input[type=text], select[name=radius] {
+  width: 90%;
+  padding: 12px 10px;
+  margin: 10px 0 20px;
+  border: 1px solid black;
+  color: black;
+  border-radius: 5px;
+  color: black;
+  font-size: 14px;
+}
 .favorite-btn {
   width: 20px;
   height: 20px;
