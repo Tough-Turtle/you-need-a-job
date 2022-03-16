@@ -13,10 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
 app.use(express.json());
 
-
 // app.use(express.static('../client'));
 
-// *********** TESTING FOR FRONT END 
+// *********** TESTING FOR FRONT END
 /*
 app.get('/search', (req, res) => {
   const dummyJobs = [{
@@ -52,14 +51,16 @@ app.get('/user', (req, res) => {
 // ********************
 
 app.get('/rapid', (req, res) => {
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
+  axios
+    .request(options)
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
   res.status(200);
-})
-
+});
 
 app.get('/', (req, res) => {
   res.send('hi from /');
@@ -72,7 +73,7 @@ app.get('/signin', (req, res) => {
 
 // search for jobs. returns a list of jobs that have not been liked by the user
 app.get('/search', indeedController.search, (req, res) => {
-  res.status(200).json(res.locals.jobs);
+  res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.jobs);
 });
 
 // return list of liked jobs
@@ -81,7 +82,7 @@ app.get('/user', userController.getLiked, (req, res) => {
 });
 
 // add a liked job posting for a user
-app.post('/:user', userController.addLiked, (req, res) => {});
+app.post('/user', userController.addLiked, (req, res) => {});
 
 // update a liked job's status for a user
 app.patch('/:user/:applicationID', userController.updateStatus, (req, res) => {});
