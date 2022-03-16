@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../containers/UserProvider.jsx';
+import axios from 'axios';
 
 export const TrackedJob = props => {
-  console.log(props.jobInfo);
+  console.log('info', props.jobInfo);
 
   const [username, setUsername] = useContext(UserContext);
 
@@ -17,34 +18,80 @@ export const TrackedJob = props => {
     location,
     summary,
     note,
-    date_apply: dateApply,
+    date_applied: dateAppliedDB,
     status,
   } = props.jobInfo;
 
   const [curStatus, setCurStatus] = useState(status);
-  const [lastDate, setLastDate] = useState(dateApply);
+  const [dateApplied, setDateApplied] = useState(dateAppliedDB);
 
   console.log('curStatus', curStatus);
 
   const handleChangeStatus = e => {
-    console.log(e.target.value);
-    setCurStatus(e.target.value);
-    setLastDate(Date());
+    console.log(Date());
+    // console.log(new Date());
+    let date = Date();
 
-    const data = JSON.stringify({
+    const newStatus = e.target.value;
+
+    // Wed Mar 16 2022 10:56:48 GMT-0700 (Pacific Daylight Time)
+
+    const months = {
+      Jan: '01',
+      Feb: '02',
+      Mar: '03',
+      Apr: '04',
+      May: '05',
+      Jun: '06',
+      Jul: '07',
+      Aug: '08',
+      Sep: '09',
+      Oct: '10',
+      Nov: '11',
+      Dec: '12',
+    };
+
+    date = date.split(' ').slice(1, 4);
+
+    date = `${date[2]}-${months[date[0]]}-${date[1]}`;
+
+    console.log('curDate', date);
+
+    console.log('new status', e.target.value);
+
+    // setLastDate(Date());
+
+    // if (!dateApplied) setDateApplied(date);
+    console.log('dateApplied state', dateApplied);
+
+    const data = {
+      _id,
       user: username,
-      status: curStatus,
-      date_apply: lastDate,
-    });
+      status: e.target.value,
+      date_applied: date,
+    };
 
-    fetch('/user', {
+    axios({
       method: 'PATCH',
-      header: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: data,
-    });
+      url: 'http://localhost:3001/user',
+      data: data,
+    })
+      .then(res => {
+        if (res.status === 200) {
+          setCurStatus(newStatus);
+          if (!dateApplied) setDateApplied(date);
+        }
+      })
+      .catch(err => console.log('error', err));
+
+    // fetch('/user', {
+    //   method: 'PATCH',
+    //   header: {
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //   },
+    //   body: data,
+    // });
   };
 
   return (
@@ -104,7 +151,7 @@ export const TrackedJob = props => {
       </div>
       <div className="result-col">
         <h2>Date Applied</h2>
-        <p>{lastDate}</p>
+        <p>{dateApplied || 'Not Yet Applied'}</p>
       </div>
       <div className="result-col">
         <h2>Notes</h2>

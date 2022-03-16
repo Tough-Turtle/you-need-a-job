@@ -125,9 +125,7 @@ app.patch('/user', userController.update, (req, res) => {
   res.sendStatus(200);
 });
 
-app.delete('/user', userController.delete, (req, res) => {
-
-});
+// app.delete('/user', userController.delete, (req, res) => {});
 
 // local error handler
 app.use((req, res) => {
