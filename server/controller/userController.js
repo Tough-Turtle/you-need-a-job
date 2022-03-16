@@ -23,19 +23,27 @@ userController.getLiked = async (req, res, next) => {
 
 // add the liked job to the user in the database
 userController.addLiked = async (req, res, next) => {
-  const { title, summary, url, company, postDate, salary, isEasyApply, user } = req.body;
+  const { user } = req.query;
+  const { title, summary, url, company, postDate, salary, isEasyApply } = req.body;
   const fields = [title, summary, url, company, postDate, salary, isEasyApply];
   const checkQueryString = 'SELECT * FROM "public"."job" WHERE url = $1;';
-  const checkedJob = await db.query(queryString, [url]);
-  // check for checkJob.rows.length;
+
+  // check if the liked job is in the list of jobs
+  const checkedJob = await db.query(checkQueryString, [url]);
+  console.log(checkedJob);
+  // if it isn't insert it into the database
   if (!checkedJob.rows.length) {
     const insertQueryString =
-      'INSERT INTO "public"."job" (title, summary, url, post_date, salary, is_easy_apply) VALUES ($1, $2, $3, $4, $5, $6, $7);';
-    const likedJob = await db.query(queryString, fields);
+      'INSERT INTO "public"."job" (title, summary, url, company, post_date, salary, is_easy_apply) VALUES ($1, $2, $3, $4, $5, $6, $7);';
+    const likedJob = await db.query(insertQueryString, fields);
+    console.log(likedJob);
   }
+
+  // add the liked job to the user_jobs db with the user's name
   const addToLikedJobsQuery =
     'INSERT INTO "public"."user_jobs"(username, job_id, note, date_applied, status) VALUES ($1, $2, $3, $4, $5)';
 
+  res.send('back from addliked!');
   // insert into public.user_jobs with user id
 };
 
