@@ -21,6 +21,7 @@ const ApplicationsContainer = props => {
   // console.log('username', username)
 
   const [username, setUsername] = useContext(UserContext);
+  const [data, setData] = useState([]);
 
   console.log('username in applications container', username);
 
@@ -34,6 +35,7 @@ const ApplicationsContainer = props => {
       .then(res => res.json())
       .then(data => {
         console.log('got data', data);
+        setData([]);
       });
   }, []);
 
@@ -42,7 +44,7 @@ const ApplicationsContainer = props => {
       {/* <NavBar username={username} /> */}
       <div className="container">
         <h1>Applications Container</h1>
-        <DataTable username={username} />
+        <DataTable username={username} data={data}/>
       </div>
     </>
   );
