@@ -19,12 +19,14 @@ export const TrackedJob = props => {
   } = props.jobInfo;
 
   const [curStatus, setCurStatus] = useState(status);
+  const [lastDate, setLastDate] = useState(dateApply);
 
   console.log('curStatus', curStatus);
 
   const handleChangeStatus = e => {
     console.log(e.target.value);
     setCurStatus(e.target.value);
+    setLastDate(Date.now().toDateString());
   };
 
   return (
@@ -84,7 +86,7 @@ export const TrackedJob = props => {
       </div>
       <div className="result-col">
         <h2>Date Applied</h2>
-        <p>{dateApply}</p>
+        <p>{lastDate}</p>
       </div>
       <div className="result-col">
         <h2>Notes</h2>

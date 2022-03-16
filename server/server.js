@@ -18,10 +18,10 @@ app.use('/callback', callback, (req, res) => {
   res.redirect('http://localhost:8080');
 });
 
-
 app.use('/signin', (req, res) => {
   // serve the sign in page to the client >> go to http://localhost:3001/signin
-  res.status(200).sendFile(path.resolve(__dirname, "./../client/index.html"));
+  res.status(200).sendFile(path.resolve(__dirname, './../client/index.html'));
+});
 // app.use(express.static('../client'));
 
 // *********** TESTING FOR FRONT END
@@ -117,7 +117,7 @@ app.get('/user', userController.getLiked, (req, res) => {
         location: 'Los Angeles, CA',
         summary: 'Redux whiz needed.',
         note: 'TBD',
-        date_apply: undefined,
+        date_apply: '3/10/22',
         status: 'Onsite',
       },
     ]);
