@@ -1,7 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../containers/UserProvider.jsx';
 
 export const TrackedJob = props => {
   console.log(props.jobInfo);
+
+  const [username, setUsername] = useContext(UserContext);
 
   const {
     _id,
@@ -26,7 +29,22 @@ export const TrackedJob = props => {
   const handleChangeStatus = e => {
     console.log(e.target.value);
     setCurStatus(e.target.value);
-    setLastDate(Date.now().toDateString());
+    setLastDate(Date());
+
+    const data = JSON.stringify({
+      user: username,
+      status: curStatus,
+      date_apply: lastDate,
+    });
+
+    fetch('/user', {
+      method: 'PATCH',
+      header: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: data,
+    });
   };
 
   return (

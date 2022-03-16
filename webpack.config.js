@@ -10,7 +10,7 @@ module.exports = {
       directory: path.resolve(__dirname, 'build'),
       publicPath: 'build',
     },
-    proxy: { '/api': 'http://localhost:3000' },
+    proxy: { '*': 'http://localhost:3001' },
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
