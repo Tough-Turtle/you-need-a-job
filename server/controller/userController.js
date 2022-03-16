@@ -3,11 +3,13 @@ const { query } = require('express');
 const db = require('../model');
 
 userController.getLiked = async (req, res, next) => {
-  const { user } = req.query;
+  console.log('in get liked');
+  const { username } = req.query;
+  console.log(username);
   const queryString =
     'SELECT * FROM user_jobs INNER JOIN job ON user_jobs.job_id=job.job_id WHERE username=$1';
   try {
-    const likedJobs = await db.query(queryString, [user]);
+    const likedJobs = await db.query(queryString, [username]);
     res.locals.liked = likedJobs.rows;
     return next();
   } catch {
@@ -21,7 +23,7 @@ userController.getLiked = async (req, res, next) => {
 
 // add the liked job to the user in the database
 userController.addLiked = async (req, res, next) => {
-  const { user } = req.query;
+  const { username } = req.query;
   const {
     title,
     summary,
