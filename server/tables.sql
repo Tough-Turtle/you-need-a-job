@@ -12,9 +12,9 @@ CREATE TABLE "job" (
 	"summary" varchar(255),
 	"url" varchar(255) NOT NULL,
 	"company" varchar(255),
-	"postDate" varchar(255),
+	"post_date" varchar(255),
 	"salary" varchar(255),
-	"isEasyApply" BOOLEAN
+	"is_easy_apply" BOOLEAN
 );
 
 

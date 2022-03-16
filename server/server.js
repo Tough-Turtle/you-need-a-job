@@ -28,7 +28,7 @@ app.get('/search', indeedController.search, (req, res) => {
 });
 
 // return list of liked jobs
-app.get('/:user', userController.getLiked, (req, res) => {
+app.get('/user', userController.getLiked, (req, res) => {
   res.status(200).json(res.locals.liked);
 });
 
@@ -38,7 +38,7 @@ app.post('/:user', userController.addLiked, (req, res) => {});
 // update a liked job's status for a user
 app.patch('/:user/:applicationID', userController.updateStatus, (req, res) => {});
 
-app.delete('/:user/:applicationID', userController.deleteLiked, (req, res) => {});
+// app.delete('/:user/:applicationID', userController.deleteLiked, (req, res) => {});
 
 // local error handler
 app.use((req, res) => {
