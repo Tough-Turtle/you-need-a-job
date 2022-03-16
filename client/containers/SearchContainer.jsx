@@ -64,10 +64,10 @@ const SearchContainer = (props) => {
   return (
     <>
     {/* <NavBar /> */}
-      <div className='search-container'>
-        <h1>Search Container</h1>
+      <div className='container'>
+        {/* <h1 className='search-header'>Looking For Job?</h1> */}
         <div>
-        <h2 style={{ border: '1px white solid' }}> Search Jobs</h2>
+        <h2 className='search-header'>Search</h2>
 
         <form onSubmit={handleSubmit}>
          
@@ -79,13 +79,13 @@ const SearchContainer = (props) => {
          <input type='text' name="location" className="search-input" onChange={handleLocationQueryInput} value={locationQuery}></input>
          </label>
 
-        <input type="submit" value="Search"/>
+          <button type="submit" value="Search" className='searchjob-button'>Search</button>
 
          </form>
         
         </div>
         <div className="job-search-query-container">
-        <h2 style={{ border: '1px white solid'}}> Search results table placeholder </h2>
+        <h2> Your Results </h2>
         <JobSearchResults queryResults={queryResults}/>
   </div>
       </div>

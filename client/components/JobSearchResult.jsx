@@ -82,45 +82,50 @@ export const JobSearchResult = props => {
   return (
     <div className="search-result">
       <div className="result-col">
-        <h2>Job Title</h2>
+        <h4>Job Title</h4>
         <p>{title}</p>
       </div>
       <div className="result-col">
-        <h2>Company</h2>
+        <h4>Company</h4>
         <p>{company}</p>
       </div>
       <div className="result-col">
-        <h2>Location</h2>
+        <h4>Location</h4>
         <p>{location}</p>
       </div>
       <div className="result-col">
-        <h2>Description</h2>
+        <h4>Description</h4>
         <p>{summary}</p>
       </div>
       <div className="result-col">
-        <h2>Salary</h2>
+        <h4>Salary</h4>
         <p>{salary}</p>
       </div>
       <div className="result-col">
-        <h2>Easy Apply</h2>
-        <p>{isEasyApply ? 'Yes' : 'No'}</p>
+        <h4>Easy Apply</h4>
+        <p>{isEasyApply ? "Yes" : "No"}</p>
       </div>
       <div className="result-col">
-        <h2>Date Posted</h2>
+        <h4>Date Posted</h4>
         <p>{postDate}</p>
       </div>
 
       <div className="result-col">
-        <h2>URL</h2>
-        <p>{url}</p>
+        <h4>URL</h4>
+        <a href={url} target="_blank">
+          Link
+        </a>
       </div>
       <div className="result-col like-btn-container">
-        <h2>Favorite</h2>
+        <h4>Favorite</h4>
         {/* <img src='../../assets/icons/heart.svg' width='20px'/> */}
         {!favorited ? (
           <div className="favorite-btn" onClick={handleSelectFavorite}></div>
         ) : (
-          <div className="favorite-btn selected" onClick={handleSelectFavorite}></div>
+          <div
+            className="favorite-btn selected"
+            onClick={handleSelectFavorite}
+          ></div>
         )}
       </div>
     </div>

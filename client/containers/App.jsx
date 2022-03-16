@@ -48,7 +48,7 @@ const App = () => {
       {/* <NavBar /> */}
       <main>
         <OAuthLogin />
-        <LoginPage handleLogin={handleLogin} />
+        {/* <LoginPage handleLogin={handleLogin} /> */}
         {/* <SearchContainer username={username}> */}
       </main>
     </>
