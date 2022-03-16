@@ -22,6 +22,14 @@ const App = () => {
     console.log(oAuthUser);
     if (oAuthUser) {
       setUsername(oAuthUser);
+      console.log('oAuthUser', oAuthUser);
+      fetch(`http://localhost:3001/signin?user=${oAuthUser}`, {
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
       setLoggedIn(true);
     }
     // const username = url.search.split('=')[1];
