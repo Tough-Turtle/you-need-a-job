@@ -26,6 +26,9 @@ const ApplicationsContainer = (props) => {
 
   console.log('username in applications container', username)
 
+  // useEffect(() => {
+
+  // })
 
 
   return (
