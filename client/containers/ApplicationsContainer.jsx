@@ -26,9 +26,18 @@ const ApplicationsContainer = (props) => {
 
   console.log('username in applications container', username)
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  // })
+    fetch(`http://localhost:3001/user?username=${username}`, {
+      method: 'GET',
+      header: {
+      'Access-Control-Allow-Origin': "*"
+    }
+  }).then(res => res.json()).then(data => {
+
+      console.log('got data', data);
+    })
+  },[]);
 
 
   return (

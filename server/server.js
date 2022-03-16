@@ -48,6 +48,7 @@ app.get('/search', (req, res) => {
   }];
 
   console.log('search route');
+  console.log('request query', req.query);
   res.status(200).header('Access-Control-Allow-Origin', "*").json(dummyJobs)
 });
 
@@ -60,6 +61,12 @@ app.post('/user', (req, res) => {
 app.delete('/user', (req, res) => {
   console.log('delete favorite route');
   console.log('request body', req.body);
+  res.status(200).header('Access-Control-Allow-Origin', "*").json(req.body)
+})
+
+app.get('/user', (req, res) => {
+  console.log('get all user favorites route');
+  console.log('request query', req.query);
   res.status(200).header('Access-Control-Allow-Origin', "*").json(req.body)
 })
 // ********************
