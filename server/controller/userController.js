@@ -3,6 +3,7 @@ const { query } = require('express');
 const db = require('../model');
 
 userController.signin = async (req, res, next) => {
+  console.log('usercontroller body:', req.body);
   try {
     const { user } = req.body;
     const queryString = 'SELECT * FROM "public"."user" WHERE username=$1';

@@ -32,6 +32,8 @@ export const TrackedJob = props => {
     // console.log(new Date());
     let date = Date();
 
+    const newStatus = e.target.value;
+
     // Wed Mar 16 2022 10:56:48 GMT-0700 (Pacific Daylight Time)
 
     const months = {
@@ -63,6 +65,7 @@ export const TrackedJob = props => {
     console.log('dateApplied state', dateApplied);
 
     const data = {
+      _id,
       user: username,
       status: e.target.value,
       date_applied: date,
@@ -71,12 +74,11 @@ export const TrackedJob = props => {
     axios({
       method: 'PATCH',
       url: 'http://localhost:3001/user',
-      body: data,
+      data: data,
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === 200) {
-          setCurStatus(e.target.value);
+      .then(res => {
+        if (res.status === 200) {
+          setCurStatus(newStatus);
           if (!dateApplied) setDateApplied(date);
         }
       })

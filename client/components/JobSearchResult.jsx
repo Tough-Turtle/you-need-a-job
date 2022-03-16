@@ -1,38 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// import heart from '../../assets/icons/heart.svg'
-// company: "Big Sky Senior Living on Waterford Way"
-// isEasyApply: true
-// location: "Butte, MT 59701"
-// postDate: "PostedJust posted"
-// salary: "From $12.41 an hourFull-time8 hour shift +2"
-// summary: "Employees are required to wear a mask and COVID test weekly.\n We are looking for a resident care aid to become a part of our compassionate care-giving team."
-// title: "Resident Assistant"
-// url: "https://www.indeed.com/pagead/clk?mo=r&ad=-6NYlbfkN0DLoIQ-Rp1dVVWdqLChq92xGYLrE5EAwhzLvvQfHFd6984BaZ14uwRHhSgkG7VgtiRPoh3gWDqVYEvhPvx3pggS0Pz4BY6D7BqGl6o6FPcKxzOvkneOH8IuOc-WVd8Ee2sgP7zg4r5KSQm55Awc28G_Q9o76i_sWy6uyPbDcinKr9YDHoUR9cLho8FTg3N76s-t5zq3qClxOqDYUAjdq-7jquQLnAtMeom5vYJwGT3puO3wVP2HXTWuxuVG7u0vqJs7PaZKYNWndvqGs_GtQ7_YSPhmGEkxc1p9c8iLJfkXEiiN3PsdmbSjacTU_Gbpl1H0TxmJVNiwdGbqBdtElIM0jkDGY6gmPtKxdtO9XFhm5krMmwTZ25dgrHKgwusLtZzotZRXxwvMvrWfCvULVuhRUkGcaC_TPo4Dp-JWVtCQi3tpi3LLyq0aCjcrHAcQ2sPlYuw3_BTyknCrQCwWZYoQiOJNYWtT3PPVkZ_pOLrk_w==&p=0&fvj=1&vjs=3"
-// [[Prototype]]:  Object
-
 export const JobSearchResult = props => {
   const { postDate, title, company, isEasyApply, salary, url, location, summary } = props.data;
 
-  // const username = props.username;
-
   const [favorited, setFavorited] = useState(false);
 
-  /*
-  {
-    date_posted: 'Tuesday', title: 'Monkey Manager', source: 'Indeed', company_name: 'Bronx Zoo', detail_url: 'https://uniqueurl1.com', location: 'Bronx', country: 'USA', state: 'NY', city: 'NY', description: 'Must have 2 years prior zookeeping experience. Monkey whispering preferred.'
-  }
-  */
-
   const handleSelectFavorite = e => {
-    // console.log(e)
-    // console.log(e.target.parentElement)
-    // console.log(e.target.parentElement.previousSibling.lastChild.innerText)
-    // console.log(e.target.parentElement.parentElement)
-
-    //   const { title, summary, url, company, postDate, salary, isEasyApply, user } = req.body;
-
     //  url: e.target.parentElement.previousSibling.lastChild.innerText
 
     const data = {
@@ -46,22 +20,16 @@ export const JobSearchResult = props => {
       user: props.username,
     };
 
-    // title, summary, url, company, postDate, salary, isEasyApply, user
-
     console.log('body data in handle select favorite', data);
-    // {"title":"Software Engineer","summary":"Proven ability to work through deadlines and meet time constraints.\n Working knowledge of software development methods and processes including Waterfall and…","url":"https://www.indeed.com/company/Calypso-Way/jobs/Software-Engineer-3575a6f7d9557738?fccid=fc22f3e3e1931727&vjs=3","company":"Calypso Way","postDate":"PostedToday","salary":"$45 - $50 an hourFull-time +1","isEasyApply":true,"user":"Hong"}
 
     if (!favorited) {
       axios({
         method: 'POST',
         url: 'http://localhost:3001/user',
-        body: data,
+        data: data,
       })
-        .then(res => res.json())
-        .then(data => {
-          console.log('got stuff back');
-          console.log(data);
-          setFavorited(true);
+        .then(res => {
+          if (res.status === 200) setFavorited(true);
         })
         .catch(err => console.log('ERROR: ', err));
     } else {

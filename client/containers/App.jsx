@@ -6,6 +6,7 @@ import { Link, Outlet, useNavigate, Navigate } from 'react-router-dom';
 // import { Redirect } from 'react-router';
 import { UserContext } from './UserProvider.jsx';
 import OAuthLogin from './OAuthLogin.jsx';
+import axios from 'axios';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -23,13 +24,22 @@ const App = () => {
     if (oAuthUser) {
       console.log('oAuthUser', oAuthUser);
 
-      fetch(`http://localhost:3001/signin?user=${oAuthUser}`, {
+      // fetch(`http://localhost:3001/signin?user=${oAuthUser}`, {
+      //   method: 'POST',
+      //   header: {
+      //     'Content-Type': 'application/x-www-form-urlencoded',
+      //     'Access-Control-Allow-Origin': '*',
+      //   },
+      // });
+
+      axios({
         method: 'POST',
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Access-Control-Allow-Origin': '*',
+        url: 'http://localhost:3001/signin',
+        data: {
+          user: oAuthUser,
         },
       });
+
       setUsername(oAuthUser);
       setLoggedIn(true);
       // ************ Uncomment later ************

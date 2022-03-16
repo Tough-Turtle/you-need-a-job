@@ -79,40 +79,40 @@ app.get('/search', indeedController.search, (req, res) => {
 // FINISHED !! return list of liked jobs
 app.get('/user', userController.getLiked, (req, res) => {
   console.log('final user get middleware');
-  // res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.liked);
-  res
-    .status(200)
-    .header('Access-Control-Allow-Origin', '*')
-    .json([
-      {
-        _id: 1,
-        postDate: 'just Posted',
-        title: 'Software Engineer',
-        company: 'Google',
-        isEasyApply: false,
-        salary: '$200,000',
-        url: 'indeed.com/greatgooglejob',
-        location: 'Mountain View, CA',
-        summary: 'React whiz needed.',
-        note: 'TBD',
-        date_apply: undefined,
-        status: 'Not Applied',
-      },
-      {
-        _id: 2,
-        postDate: 'post yesterday',
-        title: 'Software Developer',
-        company: 'Netflix',
-        isEasyApply: false,
-        salary: '$180,000',
-        url: 'indeed.com/greatnextflixjob',
-        location: 'Los Angeles, CA',
-        summary: 'Redux whiz needed.',
-        note: 'TBD',
-        date_apply: '3/10/22',
-        status: 'Onsite',
-      },
-    ]);
+  res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.liked);
+  // res
+  //   .status(200)
+  //   .header('Access-Control-Allow-Origin', '*')
+  //   .json([
+  //     {
+  //       _id: 1,
+  //       postDate: 'just Posted',
+  //       title: 'Software Engineer',
+  //       company: 'Google',
+  //       isEasyApply: false,
+  //       salary: '$200,000',
+  //       url: 'indeed.com/greatgooglejob',
+  //       location: 'Mountain View, CA',
+  //       summary: 'React whiz needed.',
+  //       note: 'TBD',
+  //       date_apply: undefined,
+  //       status: 'Not Applied',
+  //     },
+  //     {
+  //       _id: 2,
+  //       postDate: 'post yesterday',
+  //       title: 'Software Developer',
+  //       company: 'Netflix',
+  //       isEasyApply: false,
+  //       salary: '$180,000',
+  //       url: 'indeed.com/greatnextflixjob',
+  //       location: 'Los Angeles, CA',
+  //       summary: 'Redux whiz needed.',
+  //       note: 'TBD',
+  //       date_apply: '3/10/22',
+  //       status: 'Onsite',
+  //     },
+  //   ]);
 });
 
 // FINISHED !! add a liked job posting for a user
@@ -125,9 +125,7 @@ app.patch('/user', userController.update, (req, res) => {
   res.sendStatus(200);
 });
 
-app.delete('/user', userController.delete, (req, res) => {
-
-});
+// app.delete('/user', userController.delete, (req, res) => {});
 
 // local error handler
 app.use((req, res) => {
