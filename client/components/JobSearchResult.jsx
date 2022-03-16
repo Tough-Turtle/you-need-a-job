@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // import heart from '../../assets/icons/heart.svg'
 // company: "Big Sky Senior Living on Waterford Way"
@@ -31,29 +32,29 @@ export const JobSearchResult = props => {
     // console.log(e.target.parentElement.parentElement)
 
     //   const { title, summary, url, company, postDate, salary, isEasyApply, user } = req.body;
-    const data = JSON.stringify({
+
+    //  url: e.target.parentElement.previousSibling.lastChild.innerText
+
+    const data = {
       title,
       summary,
-      url: e.target.parentElement.previousSibling.lastChild.innerText,
+      url,
       company,
       postDate,
       salary,
       isEasyApply,
       user: props.username,
-    });
+    };
 
     // title, summary, url, company, postDate, salary, isEasyApply, user
 
     console.log('body data in handle select favorite', data);
     // {"title":"Software Engineer","summary":"Proven ability to work through deadlines and meet time constraints.\n Working knowledge of software development methods and processes including Waterfall and…","url":"https://www.indeed.com/company/Calypso-Way/jobs/Software-Engineer-3575a6f7d9557738?fccid=fc22f3e3e1931727&vjs=3","company":"Calypso Way","postDate":"PostedToday","salary":"$45 - $50 an hourFull-time +1","isEasyApply":true,"user":"Hong"}
+
     if (!favorited) {
-      fetch('http://localhost:3001/user', {
-        // mode: 'no-cors',
+      axios({
         method: 'POST',
-        header: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
+        url: 'http://localhost:3001/user',
         body: data,
       })
         .then(res => res.json())
@@ -64,20 +65,41 @@ export const JobSearchResult = props => {
         })
         .catch(err => console.log('ERROR: ', err));
     } else {
-      // fetch('http://localhost:3001/user', {
-      //   method: 'DELETE',
-      //   header: {
-      //     'Access-Control-Allow-Origin': '*',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: data,
-      // })
-      //   .then(res => res.json())
-      //   .then(data => {
-      //     console.log('got stuff back');
-      //     console.log(data);
       setFavorited(false);
     }
+
+    // if (!favorited) {
+    //   fetch('http://localhost:3001/user', {
+    //     // mode: 'no-cors',
+    //     method: 'POST',
+    //     header: {
+    //       'Access-Control-Allow-Origin': '*',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: data,
+    //   })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //       console.log('got stuff back');
+    //       console.log(data);
+    //       setFavorited(true);
+    //     })
+    //     .catch(err => console.log('ERROR: ', err));
+    // } else {
+    //   // fetch('http://localhost:3001/user', {
+    //   //   method: 'DELETE',
+    //   //   header: {
+    //   //     'Access-Control-Allow-Origin': '*',
+    //   //     'Content-Type': 'application/json',
+    //   //   },
+    //   //   body: data,
+    //   // })
+    //   //   .then(res => res.json())
+    //   //   .then(data => {
+    //   //     console.log('got stuff back');
+    //   //     console.log(data);
+    //   setFavorited(false);
+    // }
   };
   return (
     <div className="search-result">
