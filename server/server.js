@@ -82,7 +82,9 @@ app.get('/user', userController.getLiked, (req, res) => {
 });
 
 // add a liked job posting for a user
-app.post('/user', userController.addLiked, (req, res) => {});
+app.post('/user', userController.addLiked, (req, res) => {
+  res.status(200).json(res.locals.addSuccess);
+});
 
 // update a liked job's status for a user
 app.patch('/:user/:applicationID', userController.updateStatus, (req, res) => {});

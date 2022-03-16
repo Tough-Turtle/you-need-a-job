@@ -38,7 +38,7 @@ export const JobSearchResult = props => {
       postDate,
       salary,
       isEasyApply,
-      user: props.user,
+      user: props.username,
     });
 
     // title, summary, url, company, postDate, salary, isEasyApply, user
