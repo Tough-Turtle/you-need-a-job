@@ -1,10 +1,13 @@
-$mikelovesthiscolor: rgb(255, 205, 205);
-$txt: rgb(0, 162, 255);
+$mikelovesthiscolor: #232946;
+$txt: #121629;
+$container-bg: #b8c1ec;
+$gray: #808080;
+$selected: #ffcccb;
 
 * {
-  margin: 0;
-  box-sizing: border-box;
-  margin: 0;
+  margin: 0.5rem;
+  // box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
 }
 
 body {
@@ -13,4 +16,127 @@ body {
 
 h1 {
   color: $txt;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: $container-bg;
+}
+
+.navigation-container {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid gainsboro;
+  background-color: $container-bg;
+}
+
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .link {
+    color: $mikelovesthiscolor;
+    text-decoration: none;
+  }
+  .link:hover {
+    color: #ffffff;
+  }
+
+  .link:active {
+    color: wheat;
+  }
+}
+.status-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+button {
+  // width: 10rem;
+  background-color: $container-bg;
+  display: block;
+  padding: 0.35em 1.2em;
+  border: 0.3em solid #ffffff;
+  margin: -20px +40px;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: #000000;
+  text-align: center;
+  transition: all 0.2s;
+}
+.searchjob-button {
+  margin-left: 5px;
+}
+
+button:hover {
+  color: #000000;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.App-body {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  width: 160px;
+  height: 80px;
+  padding: 20px;
+  border: 5px solid #ffffff;
+  align-items: center;
+}
+
+.search-result {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  // flex-wrap: wrap;
+  justify-content: left;
+}
+
+.search-header {
+  color: $txt;
+}
+.search-query-label {
+  color: $txt;
+}
+.result-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  border: 1px solid #ffffff;
+  margin: 10px 0 20px;
+}
+input[type='text'],
+select[name='radius'] {
+  width: 90%;
+  padding: 12px 10px;
+  margin: 10px 0 20px;
+  border: 1px solid black;
+  color: black;
+  border-radius: 5px;
+  color: black;
+  font-size: 14px;
+}
+.favorite-btn {
+  width: 20px;
+  height: 20px;
+  background-color: $gray;
+}
+
+.favorite-btn:hover {
+  cursor: pointer;
+}
+
+.selected {
+  background-color: $selected;
 }
