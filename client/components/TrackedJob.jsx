@@ -97,39 +97,41 @@ export const TrackedJob = props => {
   return (
     <div className="search-result favorite-job-result">
       <div className="result-col">
-        <h2>Job Title</h2>
+        <h4>Job Title</h4>
         <p>{title}</p>
       </div>
       <div className="result-col">
-        <h2>Company</h2>
+        <h4>Company</h4>
         <p>{company}</p>
       </div>
       <div className="result-col">
-        <h2>Location</h2>
+        <h4>Location</h4>
         <p>{location}</p>
       </div>
       <div className="result-col">
-        <h2>Description</h2>
+        <h4>Description</h4>
         <p>{summary}</p>
       </div>
       <div className="result-col">
-        <h2>Salary</h2>
+        <h4>Salary</h4>
         <p>{salary}</p>
       </div>
       <div className="result-col">
-        <h2>Easy Apply</h2>
+        <h4>Easy Apply</h4>
         <p>{isEasyApply ? 'Yes' : 'No'}</p>
       </div>
       <div className="result-col">
-        <h2>Date Posted</h2>
+        <h4>Date Posted</h4>
         <p>{postDate}</p>
       </div>
       <div className="result-col">
-        <h2>URL</h2>
-        <p>{url}</p>
+        <h4>URL</h4>
+        <a href={url} target="_blank">
+          Link
+        </a>
       </div>
       <div className="result-col">
-        <h2>Status</h2>
+        <h4>Status</h4>
         {/* <p>{status}</p> */}
         <label className="status-header">
           Application Status
@@ -150,11 +152,11 @@ export const TrackedJob = props => {
         </label>
       </div>
       <div className="result-col">
-        <h2>Date Applied</h2>
+        <h4>Date Applied</h4>
         <p>{dateApplied ? dateApplied.split('').splice(0, 10).join('') : 'Not Yet Applied'}</p>
       </div>
       <div className="result-col">
-        <h2>Notes</h2>
+        <h4>Notes</h4>
         <p>{note}</p>
       </div>
     </div>
