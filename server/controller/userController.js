@@ -25,9 +25,7 @@ userController.signin = async (req, res, next) => {
 };
 
 userController.getLiked = async (req, res, next) => {
-  console.log('in get liked');
   const { user } = req.query;
-  console.log(user);
   const queryString =
     'SELECT * FROM user_jobs INNER JOIN job ON user_jobs.job_id=job.job_id WHERE username=$1';
   try {
@@ -94,10 +92,12 @@ userController.addLiked = async (req, res, next) => {
 userController.update = async (req, res, next) => {
   const { _id, status, note, date_applied } = req.body;
   try {
-    const updateQueryString = 'UPDATE "public"."user_jobs" SET note=$1 WHERE _id=$3 RETURNING *';
-    const updateQueryValues = [note, _id];
-    await db.query(updateQueryString, updateQueryValues);
-    res.send('hello');
+    const updateQueryString =
+      'UPDATE "public"."user_jobs" SET note=$1, status=$2, date_applied=$3 WHERE _id=$4 RETURNING *';
+    const updateQueryValues = [note, status, date_applied, _id];
+    const update = await db.query(updateQueryString, updateQueryValues);
+    res.json(update);
+    // send back status 200 on successful update
   } catch {
     return next({
       message: 'Error in the userController.update middleware',
@@ -106,9 +106,19 @@ userController.update = async (req, res, next) => {
   }
 };
 
-// userController.deleteLiked = (req, res, next) => {
-//   const user = req.params.user;
-//   const applicationID = req.params.user;
-// };
+userController.deleteLiked = async (req, res, next) => {
+  const { _id } = req.body;
+  try {
+    const deleteQueryString = 'DELETE FROM "public"."user_jobs" WHERE _id=$1';
+    const deleted = await db.query(deleteQueryString, [_id]);
+    if (deleted) console.log('deleted');
+    return next();
+  } catch {
+    return next({
+      message: 'Error in the userController.update middleware',
+      status: 500,
+    });
+  }
+};
 
 module.exports = userController;

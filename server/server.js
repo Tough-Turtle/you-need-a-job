@@ -67,18 +67,6 @@ app.post('/signin', userController.signin, (req, res) => {
   res.status(200).json(res.locals.signin);
 });
 
-app.get('/rapid', (req, res) => {
-  axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-  res.status(200);
-});
-
 app.get('/', (req, res) => {
   res.send('hi from /');
 });
@@ -132,10 +120,14 @@ app.post('/user', userController.addLiked, (req, res) => {
   res.status(200).header('Access-Control-Allow-Origin', '*').json(res.locals.addSuccess);
 });
 
-// update a liked job's status for a user
-app.patch('/user', userController.update, (req, res) => {});
+// FINISHED !! update a liked job's status for a user
+app.patch('/user', userController.update, (req, res) => {
+  res.sendStatus(200);
+});
 
-// app.delete('/:user/:applicationID', userController.deleteLiked, (req, res) => {});
+app.delete('/user', userController.delete, (req, res) => {
+
+});
 
 // local error handler
 app.use((req, res) => {
