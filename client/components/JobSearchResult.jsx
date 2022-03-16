@@ -6,7 +6,7 @@ export const JobSearchResult = (props) => {
 
   const {date_posted: datePosted, title, source, company_name: companyName, detail_url: detailUrl, location, country, state, city, description} = props.data;
 
-  const username = props.username;
+  // const username = props.username;
 
   const [favorited, setFavorited] = useState(false);
 
@@ -18,15 +18,16 @@ export const JobSearchResult = (props) => {
 
   const handleSelectFavorite = (e) => {
     // console.log(e)
-    console.log(e.target.parentElement)
-    console.log(e.target.parentElement.previousSibling.lastChild.innerText)
-    console.log(e.target.parentElement.parentElement)
+    // console.log(e.target.parentElement)
+    // console.log(e.target.parentElement.previousSibling.lastChild.innerText)
+    // console.log(e.target.parentElement.parentElement)
 
     const data = JSON.stringify({
       user: props.username,
       url: e.target.parentElement.previousSibling.lastChild.innerText
     });
-    console.log(data)
+
+    console.log('body data in handle select favorite', data);
 
     if (!favorited) {
 
@@ -47,8 +48,8 @@ export const JobSearchResult = (props) => {
       fetch('http://localhost:3001/user', {
         method: 'DELETE',
         header: {
-          'Access-Control-Allow-Origin': "*",
-          'Content-Type': 'application/json'
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
         },
         body: data
       }).then(res => res.json()).then(data => {

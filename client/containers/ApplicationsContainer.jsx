@@ -1,20 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState, useContext } from 'react';
 import NavBar from '../components/NavBar.jsx';
 import DataTable from '../components/DataTable.jsx';
-import { useLocation } from 'react-router-dom'
+import { useLocation} from 'react-router-dom'
+import {UserContext} from './UserProvider.jsx'
 
-const ApplicationsContainer = () => {
+const ApplicationsContainer = (props) => {
 
-  const {state} = useLocation();
+  //   const [username, setUsername] = useState(undefined);
 
-  console.log(state.username)
+  //  if (!username) {
+  //    let temp = useLocation().state;
+  //    setUsername(temp);
+  //  }
+
+  //  else 
+
+  // console.log(useLocation().state)
+
+  // const {username} = useLocation().state.username;
+ 
+
+  // console.log('username', username)
+
+  const [username, setUsername] = useContext(UserContext);
+
+  console.log('username in applications container', username)
+
+
 
   return (
     <>
-    <NavBar username={state.username} />
+    {/* <NavBar username={username} /> */}
       <div className='container'>
         <h1>Applications Container</h1>
-        <DataTable />
+        <DataTable username={username}/>
       </div>
     </>
   )

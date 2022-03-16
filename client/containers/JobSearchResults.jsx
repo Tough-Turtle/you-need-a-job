@@ -1,10 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {JobSearchResult} from '../components/JobSearchResult.jsx'
+import {UserContext} from './UserProvider.jsx'
 
 export const JobSearchResults = (props) => {
-  console.log('searchresultsprops', props)
+  // console.log('searchresultsprops', props)
+
+  const [username, setUsername] = useContext(UserContext);
+
 let results = [];
-  if (props) results = props.queryResults.map(result => <JobSearchResult data={result} username={props.username} />)
+  if (props) results = props.queryResults.map(result => <JobSearchResult data={result} username={username} />)
   
 
   return (

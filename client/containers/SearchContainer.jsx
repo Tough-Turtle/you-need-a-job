@@ -1,7 +1,8 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useContext} from 'react';
 import NavBar from '../components/NavBar.jsx';
 import {JobSearchResults} from './JobSearchResults.jsx'
 import { useLocation, useParams } from 'react-router-dom'
+import {UserContext} from './UserProvider.jsx';
 
 const SearchContainer = (props) => {
 
@@ -9,11 +10,11 @@ const SearchContainer = (props) => {
 
   // console.log('state', state)
 
-  console.log('search container props',props)
-  console.log('search container props location',props.location)
+  // console.log('search container props',props)
+  // console.log('search container props location',props.location)
 
-  const {username} = useParams();
-  console.log('params', username);
+  // const {username} = useParams();
+  // console.log('params', username);
 
   // const location = useLocation();
   // console.log('location', location)
@@ -22,7 +23,9 @@ const SearchContainer = (props) => {
 
   const [jobQuery, setJobQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
-  const [queryResults, setQueryResults] = useState([])
+  const [queryResults, setQueryResults] = useState([]);
+  
+  const [username, setUsername] = useContext(UserContext);
 
   const handleJobQueryInput = (e) => {
     setJobQuery(e.target.value)
@@ -60,7 +63,7 @@ const SearchContainer = (props) => {
  
   return (
     <>
-    <NavBar />
+    {/* <NavBar /> */}
       <div className='search-container'>
         <h1>Search Container</h1>
         <div>
@@ -83,7 +86,7 @@ const SearchContainer = (props) => {
         </div>
         <div className="job-search-query-container">
         <h2 style={{ border: '1px white solid'}}> Search results table placeholder </h2>
-        <JobSearchResults queryResults={queryResults} username={username}/>
+        <JobSearchResults queryResults={queryResults}/>
   </div>
       </div>
     </>

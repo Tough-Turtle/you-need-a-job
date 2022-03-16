@@ -15,7 +15,7 @@ const NavBar = (props) => {
       <h1>YNAJ</h1>
       <nav className='nav-bar'>
         <Link to='/applications' className='link'>My applications</Link>
-        <Link to={`/search/${props.username}`} className='link'>Search Jobs</Link>
+        <Link to='/search' className='link'>Search Jobs</Link>
       </nav>
     </div>
   )
