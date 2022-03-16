@@ -4,17 +4,23 @@ const process = require('process');
 
 module.exports = {
   mode: 'development',
-  entry: path.resolve(__dirname,'./client/index.js'),
+  entry: path.resolve(__dirname, './client/index.js'),
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'build'),
       publicPath: 'build',
     },
-    proxy: { '/api': 'http://localhost:3000' }
+    proxy: { '/api': 'http://localhost:3000' },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type, Authorization',
+    },
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -32,7 +38,14 @@ module.exports = {
         test: /.(css|scss)$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.svg$/,
+        use: ['svg-inline-loader', 'svg-url-loader'],
+      },
     ],
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
