@@ -68,9 +68,19 @@ userController.addLiked = async (req, res, next) => {
   }
 };
 
-userController.updateStatus = (req, res, next) => {
-  const user = req.params.user;
-  const applicationID = req.params.user;
+userController.update = async (req, res, next) => {
+  const { _id, status, note, date_applied } = req.body;
+  try {
+    const updateQueryString = 'UPDATE "public"."user_jobs" SET note=$1 WHERE _id=$3 RETURNING *';
+    const updateQueryValues = [note, _id];
+    await db.query(updateQueryString, updateQueryValues);
+    res.send('hello');
+  } catch {
+    return next({
+      message: 'Error in the userController.update middleware',
+      status: 500,
+    });
+  }
 };
 
 // userController.deleteLiked = (req, res, next) => {
