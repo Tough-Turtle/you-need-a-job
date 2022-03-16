@@ -151,7 +151,7 @@ export const TrackedJob = props => {
       </div>
       <div className="result-col">
         <h2>Date Applied</h2>
-        <p>{dateApplied || 'Not Yet Applied'}</p>
+        <p>{dateApplied ? dateApplied.split('').splice(0, 10).join('') : 'Not Yet Applied'}</p>
       </div>
       <div className="result-col">
         <h2>Notes</h2>
