@@ -21,8 +21,8 @@ const App = () => {
     const oAuthUser = new URL(window.location).search.split('=')[1];
     console.log(oAuthUser);
     if (oAuthUser) {
-      setUsername(oAuthUser);
       console.log('oAuthUser', oAuthUser);
+
       fetch(`http://localhost:3001/signin?user=${oAuthUser}`, {
         method: 'POST',
         header: {
@@ -30,7 +30,17 @@ const App = () => {
           'Access-Control-Allow-Origin': '*',
         },
       });
+      setUsername(oAuthUser);
       setLoggedIn(true);
+      // ************ Uncomment later ************
+      // .then(res => res.json())
+      // .then(data => {
+      //   if (data.signin) {
+      //     setLoggedIn(true);
+      //     setUsername(oAuthUser);
+      //   }
+      // })
+      // .catch(err => console.log('error', err));
     }
     // const username = url.search.split('=')[1];
   }, []);
