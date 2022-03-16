@@ -2,10 +2,30 @@ const userController = {};
 const { query } = require('express');
 const db = require('../model');
 
+userController.signin = async (req, res, next) => {
+  try {
+    const { user } = req.body;
+    const queryString = 'SELECT * FROM "public"."user" WHERE username=$1';
+    const userOnDB = await db.query(queryString, [user]);
+    // if user already exist on the db, return next w/o
+    if (userOnDB.rows.length) {
+      res.locals.signin = true;
+      return next();
+    }
+    const createUserString = 'INSERT INTO "public"."user" (username) VALUES ($1)';
+    const createUser = await db.query(createUserString, [user]);
+    res.locals.signin = true;
+    return next();
+  } catch {
+    return next({
+      message: 'Error in the userController.signin middleware',
+      status: 500,
+    });
+  }
+};
+
 userController.getLiked = async (req, res, next) => {
-  console.log('in get liked');
   const { user } = req.query;
-  console.log(user);
   const queryString =
     'SELECT * FROM user_jobs INNER JOIN job ON user_jobs.job_id=job.job_id WHERE username=$1';
   try {
@@ -69,14 +89,36 @@ userController.addLiked = async (req, res, next) => {
   }
 };
 
-userController.updateStatus = (req, res, next) => {
-  const user = req.params.user;
-  const applicationID = req.params.user;
+userController.update = async (req, res, next) => {
+  const { _id, status, note, date_applied } = req.body;
+  try {
+    const updateQueryString =
+      'UPDATE "public"."user_jobs" SET note=$1, status=$2, date_applied=$3 WHERE _id=$4 RETURNING *';
+    const updateQueryValues = [note, status, date_applied, _id];
+    const update = await db.query(updateQueryString, updateQueryValues);
+    res.json(update);
+    // send back status 200 on successful update
+  } catch {
+    return next({
+      message: 'Error in the userController.update middleware',
+      status: 500,
+    });
+  }
 };
 
-// userController.deleteLiked = (req, res, next) => {
-//   const user = req.params.user;
-//   const applicationID = req.params.user;
-// };
+userController.deleteLiked = async (req, res, next) => {
+  const { _id } = req.body;
+  try {
+    const deleteQueryString = 'DELETE FROM "public"."user_jobs" WHERE _id=$1';
+    const deleted = await db.query(deleteQueryString, [_id]);
+    if (deleted) console.log('deleted');
+    return next();
+  } catch {
+    return next({
+      message: 'Error in the userController.update middleware',
+      status: 500,
+    });
+  }
+};
 
 module.exports = userController;
