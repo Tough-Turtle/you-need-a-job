@@ -8,11 +8,20 @@ const port = process.env.PORT || 3001;
 
 const indeedController = require('./controller/indeedController');
 const userController = require('./controller/userController');
+const callback = require('./callback.js');
 
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
 app.use(express.json());
 
+app.use('/callback', callback, (req, res) => {
+  res.redirect('http://localhost:8080');
+});
+
+
+app.use('/signin', (req, res) => {
+  // serve the sign in page to the client >> go to http://localhost:3001/signin
+  res.status(200).sendFile(path.resolve(__dirname, "./../client/index.html"));
 // app.use(express.static('../client'));
 
 // *********** TESTING FOR FRONT END
@@ -101,7 +110,7 @@ app.use((err, req, res, next) => {
     status: 500,
   };
   const error = Object.assign({}, errHandler, err);
-  console.log(error.message);
+  console.log(error.message, err);
   res.status(error.status).send(error.message);
 });
 
