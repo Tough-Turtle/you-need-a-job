@@ -3,42 +3,21 @@ const express = require('express');
 // const router = require('./router');
 const app = express();
 require('dotenv').config();
+const axios = require('axios').default;
 const port = process.env.PORT || 3001;
-const indeed = require('indeed-scraper');
 
-const queryOptions = {
-  host: 'www.indeed.com',
-  query: 'JavaScript Software Engineer',
-  city: 'Los Angeles, CA',
-  radius: '25',
-  level: 'entry_level',
-  jobType: 'fulltime',
-  maxAge: '7',
-  sort: 'date',
-  limit: 100
-};
+const indeedController = require('./controller/indeedController');
+const userController = require('./controller/userController');
 
-// From Rapid API
-const axios = require("axios").default;
-
-const options = {
-  method: 'GET',
-  url: 'https://job-search4.p.rapidapi.com/monster/search',
-  params: {query: 'Software Engineer', state: 'CA', page: '1'},
-  headers: {
-    'x-rapidapi-host': 'job-search4.p.rapidapi.com',
-    'x-rapidapi-key': '3900315a03msh16f7ce929516f14p1ce54djsn15145610ca19'
-  }
-};
-
-// fetch('/rapid')
-
+app.use(express.urlencoded({ extended: true }));
+// app.use(cookieParser());
 app.use(express.json());
+
 
 // app.use(express.static('../client'));
 
 // *********** TESTING FOR FRONT END 
-
+/*
 app.get('/search', (req, res) => {
   const dummyJobs = [{
     date_posted: 'Tuesday', title: 'Monkey Manager', source: 'Indeed', company_name: 'Bronx Zoo', detail_url: 'https://uniqueurl1.com', location: 'Bronx', country: 'USA', state: 'NY', city: 'NY', description: 'Must have 2 years prior zookeeping experience. Monkey whispering preferred.'
@@ -69,6 +48,7 @@ app.get('/user', (req, res) => {
   console.log('request query', req.query);
   res.status(200).header('Access-Control-Allow-Origin', "*").json(req.body)
 })
+*/
 // ********************
 
 app.get('/rapid', (req, res) => {
@@ -80,12 +60,48 @@ app.get('/rapid', (req, res) => {
   res.status(200);
 })
 
+
 app.get('/', (req, res) => {
-  indeed.query(queryOptions).then(res => {
-    console.log(res); // An array of Job objects
-  });
-  res.status(200).send();
-  // res.sendFile(path.join(__dirname, '../client/index.html'));
+  res.send('hi from /');
+});
+
+app.get('/signin', (req, res) => {
+  // serve the sign in page to the client
+  res.status(200).send('send the homepage to the client');
+});
+
+// search for jobs. returns a list of jobs that have not been liked by the user
+app.get('/search', indeedController.search, (req, res) => {
+  res.status(200).json(res.locals.jobs);
+});
+
+// return list of liked jobs
+app.get('/user', userController.getLiked, (req, res) => {
+  res.status(200).json(res.locals.liked);
+});
+
+// add a liked job posting for a user
+app.post('/:user', userController.addLiked, (req, res) => {});
+
+// update a liked job's status for a user
+app.patch('/:user/:applicationID', userController.updateStatus, (req, res) => {});
+
+// app.delete('/:user/:applicationID', userController.deleteLiked, (req, res) => {});
+
+// local error handler
+app.use((req, res) => {
+  res.status(404).send('ERROR 404 - Page not found');
+});
+
+// global error handler
+app.use((err, req, res, next) => {
+  const errHandler = {
+    message: 'Error caught in unknown middleware',
+    status: 500,
+  };
+  const error = Object.assign({}, errHandler, err);
+  console.log(error.message);
+  res.status(error.status).send(error.message);
 });
 
 module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));
