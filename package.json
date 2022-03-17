@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
     "axios": "^0.26.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",

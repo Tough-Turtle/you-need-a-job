@@ -95,7 +95,7 @@ export const TrackedJob = props => {
   };
 
   return (
-    <div className="search-result favorite-job-result">
+    <article className="search-result favorite-job-result">
       <div className="result-col">
         <h4>Job Title</h4>
         <p>{title}</p>
@@ -159,6 +159,6 @@ export const TrackedJob = props => {
         <h4>Notes</h4>
         <p>{note}</p>
       </div>
-    </div>
+    </article>
   );
 };
